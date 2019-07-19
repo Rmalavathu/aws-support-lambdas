@@ -21,14 +21,21 @@ def lambda_handler(event, context):
         print(health)
     
     #Volume Size Delete if not needed
-    
+    ''''
     volumes = ec2.meta.client.describe_instance_attribute(InstanceId='i-009b1021b74fb9f21', Attribute='blockDeviceMapping')
     volumeId = (volumes['BlockDeviceMappings'][0]['Ebs']['VolumeId'])
     
     volume = ec2.Volume(volumeId)
     volumeSize = str(volume.size)
+    '''
+    
+    '''
+    #This commmand was supposed to give the space usage info but had errors with to see the full problem go to the link below
+    #https://stackoverflow.com/questions/57114028/it-is-saying-that-the-dev-xdva1-doesnt-exist
+    #The space usage should appear after using the command
+    
     os.system('df -hT /')
-
+    '''
     ################################################
     
     #The cost of the last day
