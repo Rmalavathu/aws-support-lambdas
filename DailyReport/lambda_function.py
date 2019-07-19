@@ -6,6 +6,7 @@ import subprocess
 instance = ['i-009b1021b74fb9f21']
 
 #Fix the health so that it checks the health of all the instances and can be done easily just look at start and stop lambdas
+#Need to do the SES (Email) and most likely format the text file better 
 #Other Policies that are needed are AmazonS3FullAccess and AmazonEC2ReadOnlyAccess
 
 def lambda_handler(event, context):
