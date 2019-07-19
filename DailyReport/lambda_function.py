@@ -5,14 +5,20 @@ import os
 import subprocess
 instance = ['i-009b1021b74fb9f21']
 
+#Fix the health so that it checks the health of all the instances and can be done easily just look at start and stop lambdas
+
 def lambda_handler(event, context):
     ec2 = boto3.resource('ec2')
     file = open("/tmp/DailyReport.txt", "w")
+    
+    #Health checks
     
     health = '';
     for status in ec2.meta.client.describe_instance_status()['InstanceStatuses']:
         health = (status['InstanceStatus']['Status'])
         print(health)
+    
+    #Volume Size Delete if not needed
     
     volumes = ec2.meta.client.describe_instance_attribute(InstanceId='i-009b1021b74fb9f21', Attribute='blockDeviceMapping')
     volumeId = (volumes['BlockDeviceMappings'][0]['Ebs']['VolumeId'])
@@ -21,6 +27,7 @@ def lambda_handler(event, context):
     volumeSize = str(volume.size)
     os.system('df -hT /')
 
+    ################################################
     
     d = datetime.datetime.today()
     
@@ -36,12 +43,15 @@ def lambda_handler(event, context):
     dailyCost = "$" + str(dailyCost)
     
     print(cost)
+    
+    #Writes to file 
+    
     s = ("InstanceId: i-009b1021b74fb9f21 \n" + "Health: " + health + "\n" + "Total Disk Space: " + volumeSize + "\n" + "Daily Cost: " + dailyCost)
     
     file.write(s)
     
     file.close()
 
-    
+    #Upload to s3
     s3 = boto3.client('s3')
     s3.upload_file('/tmp/DailyReport.txt', 'dailyreport123456789', 'DailyReport.txt')
