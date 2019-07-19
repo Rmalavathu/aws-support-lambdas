@@ -30,6 +30,7 @@ def lambda_handler(event, context):
 
     ################################################
     
+    #The cost of the last day
     d = datetime.datetime.today()
     
     lastDate = str(d.year) + "-0" + str(d.month) +  "-" + str(d.day - 1)
