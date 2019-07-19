@@ -8,6 +8,8 @@ instances = ['i-009b1021b74fb9f21']
 #Needs a CloudWatch Role for trigger
 #Cron Expression for CloudWatch Role 0/30 8-20 ? * * *
 #The first number is it updates every 30 minutes and 8-20 is the time interval when it updates
+#Need other polices AmazonEC2ReadOnlyAccess and AmazonDynamoDBFullAccess and AWSLambdaBasicExecutionRole and the one provided in the folder
+#It worked when I used all these policies but some may not be needed 
 
 def lambda_handler(event, context):
     client = boto3.client('ec2')
