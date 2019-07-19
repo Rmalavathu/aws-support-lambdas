@@ -63,5 +63,6 @@ def lambda_handler(event, context):
     file.close()
 
     #Upload to s3
+    #Change the middle parameter to the bucket you want to upload to
     s3 = boto3.client('s3')
     s3.upload_file('/tmp/DailyReport.txt', 'dailyreport123456789', 'DailyReport.txt')
